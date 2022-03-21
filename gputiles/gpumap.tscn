@@ -6,7 +6,6 @@
 [sub_resource type="Shader" id="Shader_iha7d"]
 code = "shader_type canvas_item;
 uniform sampler2D tileset;
-uniform vec2 tileSize=vec2(8,8);
 uniform sampler2D usedTiles;
 uniform vec2 chunkSize=vec2(8,8);
 uniform int tileCount=1;
@@ -15,7 +14,11 @@ float getTile(vec2 input){
 	return texture(usedTiles,input).r;
 }
 vec4 getPos(float tile,vec2 input){
-	vec4 output =texture(tileset,vec2(input.x,input.y)/tileSize*chunkSize,0.0);
+	vec2 inp = input*chunkSize;
+	while(inp.x>1.||inp.y>1.){
+		if(inp.x>1.){inp.x--;}
+		if(inp.y>1.){inp.y--;}}
+	vec4 output =texture(tileset,vec2(inp.x,inp.y)/vec2(1,float(tileCount)),0.);
 	return (output);
 }
 
@@ -31,7 +34,6 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fh02r"]
 shader = SubResource( "Shader_iha7d" )
-shader_param/tileSize = Vector2(32, 32)
 shader_param/chunkSize = Vector2(8, 8)
 shader_param/tileCount = 1
 shader_param/tileset = ExtResource( "1_rrfo0" )
@@ -40,7 +42,7 @@ shader_param/usedTiles = ExtResource( "1_rrfo0" )
 [node name="gpumap" type="ColorRect"]
 material = SubResource( "ShaderMaterial_fh02r" )
 rect_min_size = Vector2(512, 512)
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 512.0
+offset_bottom = 512.0
 mouse_filter = 2
 script = ExtResource( "1_8oj6w" )
