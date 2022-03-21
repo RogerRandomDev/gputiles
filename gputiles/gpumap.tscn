@@ -11,7 +11,7 @@ uniform vec2 chunkSize=vec2(8,8);
 uniform int tileCount=1;
 
 float getTile(vec2 input){
-	return texture(usedTiles,input).r;
+	return texture(usedTiles,round((input)*chunkSize-vec2(0.5))/chunkSize).r;
 }
 vec4 getPos(float tile,vec2 input){
 	vec2 inp = input*chunkSize;
@@ -35,7 +35,7 @@ void fragment() {
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fh02r"]
 shader = SubResource( "Shader_iha7d" )
 shader_param/chunkSize = Vector2(8, 8)
-shader_param/tileCount = 1
+shader_param/tileCount = 2
 shader_param/tileset = ExtResource( "1_rrfo0" )
 shader_param/usedTiles = ExtResource( "1_rrfo0" )
 
